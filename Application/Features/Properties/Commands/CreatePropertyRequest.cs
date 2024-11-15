@@ -19,7 +19,8 @@ namespace Application.Features.Properties.Commands
             PropertyRequest = newPropertyRequest;
         }
     }
-
+    
+    //Can Seperate in other file
     public class CreatePropertyRequestHandler : IRequestHandler<CreatePropertyRequest, bool>
     {
         private readonly IPropertyRepo _propertyRepo;
