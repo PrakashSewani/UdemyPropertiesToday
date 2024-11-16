@@ -13,13 +13,13 @@ namespace Application.Features.Properties.Commands
 {
     public class CreatePropertyRequest : IRequest<bool>
     {
-        public NewPropertyRequest PropertyRequest { get; set; }
-        public CreatePropertyRequest(NewPropertyRequest newPropertyRequest)
+        public NewProperty PropertyRequest { get; set; }
+        public CreatePropertyRequest(NewProperty newPropertyRequest)
         {
             PropertyRequest = newPropertyRequest;
         }
     }
-    
+
     //Can Seperate in other file
     public class CreatePropertyRequestHandler : IRequestHandler<CreatePropertyRequest, bool>
     {
@@ -35,6 +35,7 @@ namespace Application.Features.Properties.Commands
         public async Task<bool> Handle(CreatePropertyRequest request, CancellationToken cancellationToken)
         {
             Property property = _mapper.Map<Property>(request.PropertyRequest);
+            property.ListDate = DateTime.Now;
             await _propertyRepo.AddNewAsync(property);
             return true;
         }
