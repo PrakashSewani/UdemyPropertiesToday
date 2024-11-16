@@ -14,6 +14,7 @@ namespace Application.MappingProfiles
         public Mappings()
         {
             CreateMap<NewProperty, Property>();
+            CreateMap<Property, PropertyDto>();
         }
     }
 }
