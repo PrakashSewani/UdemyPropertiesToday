@@ -51,5 +51,27 @@ namespace WebAPI.Controllers
             }
             return NotFound("Property Could Not be Found!");
         }
+
+        [HttpGet("all")]
+        public async Task<IActionResult> GetProperties()
+        {
+            List<PropertyDto> propertyDtos = await _mediatrSender.Send(new GetPropertiesRequest());
+            if (propertyDtos != null)
+            {
+                return Ok(propertyDtos);
+            }
+            return NotFound("No Properties was found");
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProperty(int id)
+        {
+            bool isSuccessful = await _mediatrSender.Send(new DeletePropertyRequest(id));
+            if (isSuccessful)
+            {
+                return Ok("Property Deleted");
+            }
+            return NotFound("Property Not Found");
+        }
     }
 }

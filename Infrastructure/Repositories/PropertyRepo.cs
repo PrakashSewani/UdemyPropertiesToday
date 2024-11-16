@@ -25,14 +25,16 @@ namespace Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(Property property)
+        public async Task DeleteAsync(Property property)
         {
-            throw new NotImplementedException();
+            _context.Properties.Remove(property);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<List<Property>> GetAllAsync()
+        public async Task<List<Property>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Properties
+                .ToListAsync();
         }
 
         public async Task<Property> GetByIdAsync(int id)
