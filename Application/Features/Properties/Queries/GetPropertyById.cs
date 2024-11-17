@@ -13,11 +13,13 @@ namespace Application.Features.Properties.Queries
         public string CacheKey { get; set; }
         public bool BypassCache { get; set; }
         public TimeSpan? SlidingExpiration { get; set; }
+        public bool ValueModified { get; set; }
 
         public GetPropertyById(int propertyId)
         {
             PropertyId = propertyId;
             CacheKey = $"GetPropertyById:{propertyId}";
+            ValueModified = false;
         }
     }
 

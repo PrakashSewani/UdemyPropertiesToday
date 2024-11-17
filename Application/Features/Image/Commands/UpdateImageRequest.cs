@@ -1,4 +1,5 @@
 ﻿using Application.Models;
+using Application.PipelineBehavior.Contracts;
 using Application.Repositories;
 using AutoMapper;
 using Domain;
@@ -8,16 +9,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Application.Features.Image.Commands
 {
-    public class UpdateImageRequest : IRequest<bool>
+    public class UpdateImageRequest : IRequest<bool>, ICacheable
     {
         public UpdateImage UpdateImage { get; set; }
+        public string CacheKey { get; set; }
+        public bool BypassCache { get; set; }
+        public TimeSpan? SlidingExpiration { get; set; }
+        public bool ValueModified { get; set; }
 
         public UpdateImageRequest(UpdateImage updateImage)
         {
             UpdateImage = updateImage;
+            CacheKey = $"GetImageById:{updateImage.Id}";
+            ValueModified = true;
         }
     }
 

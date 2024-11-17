@@ -18,11 +18,13 @@ namespace Application.Features.Image.Queries
         public string CacheKey { get; set; }
         public bool BypassCache { get; set; }
         public TimeSpan? SlidingExpiration { get; set; }
+        public bool ValueModified { get; set; }
 
         public GetImageByIdRequest(int imageId)
         {
             ImageId = imageId;
             CacheKey = $"GetImageById:{ImageId}";
+            ValueModified = false ;
         }
     }
 

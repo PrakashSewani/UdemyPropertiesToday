@@ -34,7 +34,15 @@ namespace Application.PipelineBehavior
 
             if (cacheResponse != null)
             {
-                response = JsonConvert.DeserializeObject<TResponse>(Encoding.Default.GetString(cacheResponse));
+                if (request.ValueModified)
+                {
+                    await _cache.RemoveAsync(cacheKey, cancellationToken);
+                    response = await next();
+                }
+                else
+                {
+                    response = JsonConvert.DeserializeObject<TResponse>(Encoding.Default.GetString(cacheResponse));
+                }
             }
             else
             {

@@ -1,4 +1,5 @@
 ﻿using Application.Models;
+using Application.PipelineBehavior.Contracts;
 using Application.Repositories;
 using Domain;
 using MediatR;
@@ -10,13 +11,19 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Properties.Commands
 {
-    public class UpdatePropertyRequest : IRequest<bool>
+    public class UpdatePropertyRequest : IRequest<bool>, ICacheable
     {
         public UpdateProperty UpdateProperty { get; set; }
+        public string CacheKey { get; set; }
+        public bool BypassCache { get; set; }
+        public TimeSpan? SlidingExpiration { get; set; }
+        public bool ValueModified { get; set; }
 
         public UpdatePropertyRequest(UpdateProperty updateProperty)
         {
             UpdateProperty = updateProperty;
+            CacheKey = $"GetPropertyById:{UpdateProperty.Id}";
+            ValueModified = true;
         }
     }
 

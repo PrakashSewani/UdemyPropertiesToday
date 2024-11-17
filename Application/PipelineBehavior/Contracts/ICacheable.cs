@@ -11,5 +11,6 @@ namespace Application.PipelineBehavior.Contracts
         public string CacheKey { get; set; }
         public bool BypassCache { get; set; }
         public TimeSpan? SlidingExpiration { get; set; }
+        public bool ValueModified { get; set; }
     }
 }

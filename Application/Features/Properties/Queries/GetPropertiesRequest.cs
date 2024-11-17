@@ -21,12 +21,14 @@ namespace Application.Features.Properties.Queries
         public string CacheKey { get; set; }
         public bool BypassCache { get; set; }
         public TimeSpan? SlidingExpiration { get; set; }
+        public bool ValueModified { get; set; }
 
         public GetPropertiesRequestHandler(IPropertyRepo propertyRepo, IMapper mapper)
         {
             _propertyRepo = propertyRepo;
             _mapper = mapper;
             CacheKey = "GetProperties";
+            ValueModified = false;
         }
 
         private readonly IPropertyRepo _propertyRepo;
