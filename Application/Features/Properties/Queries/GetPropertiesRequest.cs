@@ -1,4 +1,5 @@
 ﻿using Application.Models;
+using Application.PipelineBehavior.Contracts;
 using Application.Repositories;
 using AutoMapper;
 using Domain;
@@ -15,16 +16,21 @@ namespace Application.Features.Properties.Queries
     {
     }
 
-    public class GetPropertiesRequestHandler : IRequestHandler<GetPropertiesRequest, List<PropertyDto>>
+    public class GetPropertiesRequestHandler : IRequestHandler<GetPropertiesRequest, List<PropertyDto>>, ICacheable
     {
-        private readonly IPropertyRepo _propertyRepo;
-        private readonly IMapper _mapper;
+        public string CacheKey { get; set; }
+        public bool BypassCache { get; set; }
+        public TimeSpan? SlidingExpiration { get; set; }
 
         public GetPropertiesRequestHandler(IPropertyRepo propertyRepo, IMapper mapper)
         {
             _propertyRepo = propertyRepo;
             _mapper = mapper;
+            CacheKey = "GetProperties";
         }
+
+        private readonly IPropertyRepo _propertyRepo;
+        private readonly IMapper _mapper;
 
         public async Task<List<PropertyDto>> Handle(GetPropertiesRequest request, CancellationToken cancellationToken)
         {

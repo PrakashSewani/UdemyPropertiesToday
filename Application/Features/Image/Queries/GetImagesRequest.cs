@@ -1,4 +1,5 @@
 ﻿using Application.Models;
+using Application.PipelineBehavior.Contracts;
 using Application.Repositories;
 using AutoMapper;
 using Domain;
@@ -11,8 +12,16 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Image.Queries
 {
-    public class GetImagesRequest : IRequest<List<ImageDto>>
+    public class GetImagesRequest : IRequest<List<ImageDto>>, ICacheable
     {
+        public string CacheKey { get; set; }
+        public bool BypassCache { get; set; }
+        public TimeSpan? SlidingExpiration { get; set; }
+
+        public GetImagesRequest()
+        {
+            CacheKey = "GetImageRequests";
+        }
     }
 
     public class GetImagesRequestHandler : IRequestHandler<GetImagesRequest, List<ImageDto>>
