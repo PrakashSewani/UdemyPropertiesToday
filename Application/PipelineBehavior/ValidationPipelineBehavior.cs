@@ -1,4 +1,5 @@
 ﻿using Application.Exceptions;
+using Application.PipelineBehavior.Contracts;
 using FluentValidation;
 using MediatR;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 namespace Application.PipelineBehavior
 {
     public class ValidationPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest<TResponse>
+        where TRequest : IRequest<TResponse>, IValidatable
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 

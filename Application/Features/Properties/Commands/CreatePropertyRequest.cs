@@ -1,4 +1,5 @@
 ﻿using Application.Models;
+using Application.PipelineBehavior.Contracts;
 using Application.Repositories;
 using AutoMapper;
 using Domain;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Features.Properties.Commands
 {
-    public class CreatePropertyRequest : IRequest<bool>
+    public class CreatePropertyRequest : IRequest<bool>, IValidatable
     {
         public NewProperty PropertyRequest { get; set; }
         public CreatePropertyRequest(NewProperty newPropertyRequest)
